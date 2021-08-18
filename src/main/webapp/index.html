@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>AJAX</title>
+    <script>
+
+    </script>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+
+<form>
+    <div class="form-group">
+        <label>Add new task</label>
+        <input type="text" class="form-control" id="exampleInputTask1">
+    </div>
+    <button id="button" type="submit" class="btn btn-primary" >Submit</button>
+</form>
+
+<form>
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="allTasks">
+        <label class="form-check-label" for="allTasks" >Completed tasks</label>
+    </div>
+</form>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Done</th>
+                        <th scope="col">Task</th>
+                        <th scope="col">Date</th>
+                    </tr>
+            </thead>
+            <tbody id = insert>
+
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $('document').ready(function () {
+            $.ajax({
+                method: 'GET',
+                url: 'http://localhost:8080/todo/all_tasks',
+                dataType: 'json',
+            }).done(function (data) {
+                for (const task of data) {
+                    let idVal = task.id;
+                    let doneVal = task.done;
+                    let lineCheckBox = getCheckBox(doneVal, idVal);
+                    $('#insert').append(`<tr>
+                        + <td> ${task.id} </td>
+                        + ${lineCheckBox}
+                        + <td> ${task.description} </td>
+                        + <td> ${task.created} </td>
+                        + </tr>`);
+                }
+            });
+            $('#button').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:8080/todo/save',
+                    data: JSON.stringify({
+                        text: $('#exampleInputTask1').val()
+                    }),
+                    dataType: 'json',
+                    success: (function(data) {
+                        //alert("done" + data.toString());
+                    }),
+                    error: (function() {
+                        //alert("failed");
+                    })
+                })
+            });
+
+            $('#insert').on('click', '.box', function() {
+                console.log("Click");
+                let idVal;
+                let doneBox;
+                if ($(this).is(':checked')){
+                    idVal = $(this).attr('id');
+                    doneBox = true;
+                    $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        url: 'http://localhost:8080/todo/update',
+                        data: JSON.stringify(
+                            {idVal : idVal,
+                                state : doneBox}
+                        )
+                    }).done(function(data) {
+                        console.log("Dane" + data)
+                    }).fail(function(err){
+                        alert(err);
+                    });
+                } else {
+                    idVal = $(this).attr('id');
+                    doneBox = false;
+                    $.ajax({
+                        type: 'POST',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        url: 'http://localhost:8080/todo/update',
+                        data: JSON.stringify(
+                            {idVal : idVal,
+                                state : doneBox}
+                        )
+                    }).done(function(data) {
+                        console.log("Dane" + data)
+                    }).fail(function(err){
+                        alert(err);
+                    });
+                }
+            });
+
+        });
+
+        function getCheckBox(done, id) {
+            let result;
+            if (done === true) {
+                result = `<td> <input type="checkbox" class="box" id=${id} checked> </td>`;
+            } else {
+                result = `<td> <input type="checkbox" class="box" id=${id} > </td>`;
+            }
+            return result
+        } // end getCheckBox
+
+        $(document).on('click','#allTasks', function() {
+            //alert("Go to allTask");
+            if ($(this).prop('checked')) {
+                $('.box').each(function(){
+                    //alert("Go to checked");
+                    if ($(this).prop('checked')) {
+                        $(this).parents("tr").hide();
+                    } // end if
+                }); // end func
+            } else {
+                $('.box').each(function () {
+                    //alert("Go to unchecked");
+                        $(this).parents("tr").show();
+                }); // end func
+            } // end else
+        }); // end all
+
+    </script>
+</body>
+</html>
