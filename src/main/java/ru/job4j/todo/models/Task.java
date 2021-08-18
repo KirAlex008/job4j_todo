@@ -57,24 +57,23 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", created=" + created +
-                ", done=" + done +
-                '}';
+        return "Task{" + "id=" + id + ", description='" + description + '\'' + ", created=" + created + ", done=" + done + '}';
     }
 
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Task task = (Task) o;
-        return done == task.done &&
-                id.equals(task.id) &&
-                description.equals(task.description) &&
-                created.equals(task.created);
+        return done == task.done
+                && id.equals(task.id)
+                && description.equals(task.description)
+                && created.equals(task.created);
     }
 
     @Override
