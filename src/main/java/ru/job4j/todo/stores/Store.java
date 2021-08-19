@@ -12,5 +12,5 @@ public interface Store {
 
     boolean update(Integer id, boolean done);
 
-    Task findById(Integer id);
+    //Task findById(Integer id);
 }

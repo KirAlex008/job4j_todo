@@ -31,7 +31,6 @@ $('document').ready(function () {
         }).fail(function(err){
         alert(err);
     });
-
     });
 
     $('#insert').on('click', '.box', function() {
@@ -49,8 +48,6 @@ $('document').ready(function () {
                     {idVal : idVal,
                         state : doneBox}
                 )
-            }).done(function(data) {
-                console.log(data.toString())
             }).fail(function(err){
                 alert(err);
             });
@@ -66,8 +63,6 @@ $('document').ready(function () {
                     {idVal : idVal,
                         state : doneBox}
                 )
-            }).done(function(data) {
-                console.log(data.toString())
             }).fail(function(err){
                 alert(err);
             });

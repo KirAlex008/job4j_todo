@@ -6,6 +6,7 @@ import ru.job4j.todo.models.Task;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.job4j.todo.stores.HbmStore;
+import ru.job4j.todo.stores.HbmStoreWrapper;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,19 +28,12 @@ public class TaskUpdateServlet extends HttpServlet {
         Integer id = Integer.parseInt(idVal);
         String state = data.get("state").getAsString();
         boolean done = Boolean.parseBoolean(state);
-        HbmStore store = new HbmStore();
-        Task task = store.findById(id);
-        task.setDone(done);
-        String response = null;
-        response = store.update(id, done) ? "success" : "fail";
-        System.out.println(response);
-        System.out.println(task.toString());
+        //HbmStore store = new HbmStore();
+        HbmStoreWrapper store = new HbmStoreWrapper();
+        String response = store.update(id, done) ? "success" : "fail";
+        //System.out.println(response + "RESP");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/json");
-        OutputStream output = resp.getOutputStream();
-        String json = GSON.toJson(task);
-        output.write(json.getBytes(StandardCharsets.UTF_8));
-        output.flush();
-        output.close();
+        resp.getWriter().print(response);
     }
 }
