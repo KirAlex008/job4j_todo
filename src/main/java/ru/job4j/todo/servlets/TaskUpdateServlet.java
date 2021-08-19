@@ -24,16 +24,14 @@ public class TaskUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObject data = new Gson().fromJson(req.getReader(), JsonObject.class);
         String idVal = data.get("idVal").getAsString();
-        System.out.println(idVal);
         Integer id = Integer.parseInt(idVal);
         String state = data.get("state").getAsString();
-        System.out.println(state);
         boolean done = Boolean.parseBoolean(state);
         HbmStore store = new HbmStore();
         Task task = store.findById(id);
         task.setDone(done);
         String response = null;
-        response = store.update(task) ? "success" : "fail";
+        response = store.update(id, done) ? "success" : "fail";
         System.out.println(response);
         System.out.println(task.toString());
         resp.setCharacterEncoding("UTF-8");

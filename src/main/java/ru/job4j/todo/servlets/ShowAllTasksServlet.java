@@ -23,9 +23,6 @@ public class ShowAllTasksServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
         HbmStore store = new HbmStore();
         Collection<Task> tasks = store.findAllTasks();
-        for (var el : tasks) {
-            System.out.println(el.toString());
-        }
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(tasks);
