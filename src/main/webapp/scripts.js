@@ -28,16 +28,13 @@ $('document').ready(function () {
                 text: $('#exampleInputTask1').val()
             }),
             dataType: 'json',
-        }).done(function (data) {
-            console.log(data.toString())
-    }).fail(function(err){
+        }).fail(function(err){
         alert(err);
     });
 
     });
 
     $('#insert').on('click', '.box', function() {
-        console.log("Click");
         let idVal;
         let doneBox;
         if ($(this).is(':checked')){
@@ -70,7 +67,7 @@ $('document').ready(function () {
                         state : doneBox}
                 )
             }).done(function(data) {
-                console.log("Dane" + data)
+                console.log(data.toString())
             }).fail(function(err){
                 alert(err);
             });
@@ -78,17 +75,14 @@ $('document').ready(function () {
     });
 
     $(document).on('click','#allTasks', function() {
-        //alert("Go to allTask");
         if ($(this).prop('checked')) {
             $('.box').each(function(){
-                //alert("Go to checked");
                 if ($(this).prop('checked')) {
                     $(this).parents("tr").hide();
                 } // end if
             }); // end func
         } else {
             $('.box').each(function () {
-                //alert("Go to unchecked");
                 $(this).parents("tr").show();
             }); // end func
         } // end else

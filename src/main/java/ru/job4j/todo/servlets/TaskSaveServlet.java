@@ -22,18 +22,8 @@ public class TaskSaveServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/json");
         HbmStore store = new HbmStore();
-        Task task = store.createTask(Task.of(description, new Timestamp(System.currentTimeMillis()), false));
-        String response = null;
-        if (task.getId() != 0) {
-            response = "Task is created";
-            System.out.println(response);
-        } else {
-            response = "Task is not created";
-        }
+        store.createTask(Task.of(description, new Timestamp(System.currentTimeMillis()), false));
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        JSONObject outLineJson = new JSONObject();
-        outLineJson.put("text", response);
-        writer.println(outLineJson);
         writer.flush();
     }
 }
