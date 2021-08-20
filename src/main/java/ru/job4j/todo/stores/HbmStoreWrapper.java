@@ -10,13 +10,21 @@ import ru.job4j.todo.models.Task;
 import java.util.Collection;
 import java.util.function.Function;
 
-/*
 public class HbmStoreWrapper implements Store, AutoCloseable {
+
+    private static final HbmStoreWrapper INSTANCE = new HbmStoreWrapper();
 
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure().build();
     private final SessionFactory sf = new MetadataSources(registry)
             .buildMetadata().buildSessionFactory();
+
+    private HbmStoreWrapper() {
+    }
+
+    public static HbmStoreWrapper getInstance() {
+        return INSTANCE;
+    }
 
     private <T> T tx(final Function<Session, T> command) {
         final Session session = sf.openSession();
@@ -47,11 +55,11 @@ public class HbmStoreWrapper implements Store, AutoCloseable {
     }
 
     @Override
-    public boolean update(Integer id, boolean done) {
+    public boolean update(Integer id) {
         return this.tx(
                 session -> {
                     Task task = session.get(Task.class, id);
-                    task.setDone(done);
+                    task.setDone(!task.isDone());
                     boolean success = false;
                     try {
                         session.update(task);
@@ -71,4 +79,3 @@ public class HbmStoreWrapper implements Store, AutoCloseable {
 
 
 }
-*/
