@@ -23,7 +23,11 @@ public class HbmStoreWrapper implements Store, AutoCloseable {
     }
 
     public static HbmStoreWrapper getInstance() {
-        return INSTANCE;
+        return Holder.INSTANCE;
+    }
+
+    private static final class Holder {
+        private static final HbmStoreWrapper INSTANCE = new HbmStoreWrapper();
     }
 
     private <T> T tx(final Function<Session, T> command) {
