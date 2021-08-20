@@ -38,33 +38,34 @@ $('document').ready(function () {
         let doneBox;
         if ($(this).is(':checked')){
             idVal = $(this).attr('id');
-            doneBox = true;
+            console.log(idVal)
             $.ajax({
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
                 url: 'http://localhost:8080/todo/update',
                 data: JSON.stringify(
-                    {idVal : idVal,
-                        state : doneBox}
-                )
+                    {idVal : idVal}
+                ),
+            }).done(function (data) {
+                console.log(data.text)
             }).fail(function(err){
-                alert(err);
-            });
+                    alert(err.responseText);
+                });
+
         } else {
             idVal = $(this).attr('id');
-            doneBox = false;
+            console.log(idVal)
             $.ajax({
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
                 url: 'http://localhost:8080/todo/update',
-                data: JSON.stringify(
-                    {idVal : idVal,
-                        state : doneBox}
-                )
+                data: JSON.stringify({idVal : idVal}),
+            }).done(function (data) {
+                console.log(data.text)
             }).fail(function(err){
-                alert(err);
+                alert(err.responseText);
             });
         }
     });

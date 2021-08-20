@@ -6,7 +6,7 @@ import ru.job4j.todo.models.Task;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.job4j.todo.stores.HbmStore;
-import ru.job4j.todo.stores.HbmStoreWrapper;
+//import ru.job4j.todo.stores.HbmStoreWrapper;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,16 +24,16 @@ public class TaskUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObject data = new Gson().fromJson(req.getReader(), JsonObject.class);
-        String idVal = data.get("idVal").getAsString();
-        Integer id = Integer.parseInt(idVal);
-        String state = data.get("state").getAsString();
-        boolean done = Boolean.parseBoolean(state);
-        //HbmStore store = new HbmStore();
-        HbmStoreWrapper store = new HbmStoreWrapper();
-        String response = store.update(id, done) ? "success" : "fail";
-        //System.out.println(response + "RESP");
+        Integer id = Integer.parseInt(data.get("idVal").getAsString());
+        HbmStore store = new HbmStore();
+        //HbmStoreWrapper store = new HbmStoreWrapper();
+        String response = store.update(id) ? "success" : "fail";
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/json");
-        resp.getWriter().print(response);
+        JSONObject outLineJson = new JSONObject();
+        outLineJson.put("text", response);
+        PrintWriter writer = new PrintWriter(resp.getOutputStream());
+        writer.println(outLineJson);
+        writer.flush();
     }
 }

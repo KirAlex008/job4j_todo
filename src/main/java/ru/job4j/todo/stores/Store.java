@@ -10,7 +10,7 @@ public interface Store {
 
     Task createTask(Task task);
 
-    boolean update(Integer id, boolean done);
+    boolean update(Integer id);
 
     //Task findById(Integer id);
 }

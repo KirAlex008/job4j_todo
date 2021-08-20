@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.job4j.todo.models.Task;
 import ru.job4j.todo.stores.HbmStore;
-import ru.job4j.todo.stores.HbmStoreWrapper;
+//import ru.job4j.todo.stores.HbmStoreWrapper;
 import ru.job4j.todo.stores.Store;
 
 import javax.servlet.ServletException;
@@ -22,12 +22,9 @@ public class ShowAllTasksServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
-        //HbmStore store = new HbmStore();
-        HbmStoreWrapper store = new HbmStoreWrapper();
+        HbmStore store = new HbmStore();
+        //HbmStoreWrapper store = new HbmStoreWrapper();
         Collection<Task> tasks = store.findAllTasks();
-       /* for (var el: tasks) {
-            System.out.println(el.toString());
-        }*/
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(tasks);

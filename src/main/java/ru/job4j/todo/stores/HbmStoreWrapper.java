@@ -10,6 +10,7 @@ import ru.job4j.todo.models.Task;
 import java.util.Collection;
 import java.util.function.Function;
 
+/*
 public class HbmStoreWrapper implements Store, AutoCloseable {
 
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
@@ -70,3 +71,4 @@ public class HbmStoreWrapper implements Store, AutoCloseable {
 
 
 }
+*/

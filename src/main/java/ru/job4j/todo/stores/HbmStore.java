@@ -39,11 +39,13 @@ public class HbmStore implements Store, AutoCloseable {
     }
 
     @Override
-    public boolean update(Integer id, boolean done) {
+    public boolean update(Integer id) {
         Session session = sf.openSession();
         session.beginTransaction();
         Task task = session.get(Task.class, id);
-        task.setDone(done);
+        System.out.println(task.isDone());
+        System.out.println(!task.isDone());
+        task.setDone(!task.isDone());
         boolean success = false;
         try {
             session.update(task);
