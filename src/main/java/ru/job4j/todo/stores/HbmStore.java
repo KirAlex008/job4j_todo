@@ -6,6 +6,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.job4j.todo.models.Task;
+import ru.job4j.todo.models.User;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +20,7 @@ public class HbmStore implements Store, AutoCloseable {
 
 
     @Override
-    public Collection<Task> findAllTasks() {
+    public Collection<Task> findAllTasks(User user) {
         Session session = sf.openSession();
         session.beginTransaction();
         List result = session.createQuery("from ru.job4j.todo.models.Task").list();
@@ -57,6 +58,16 @@ public class HbmStore implements Store, AutoCloseable {
         session.close();
         System.out.println(success);
         return success;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public User createUser(User user) {
+        return null;
     }
 
     public Task findById(Integer id) {

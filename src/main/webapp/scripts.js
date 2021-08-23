@@ -2,7 +2,7 @@ $('document').ready(function () {
 
     $.ajax({
         method: 'GET',
-        url: 'http://localhost:8080/todo/all_tasks',
+        url: 'http://localhost:8080/todo/all_tasks.do',
         dataType: 'json',
     }).done(function (data) {
         for (const task of data) {
@@ -23,7 +23,7 @@ $('document').ready(function () {
     $('#button').click(function () {
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8080/todo/save',
+            url: 'http://localhost:8080/todo/save.do',
             data: JSON.stringify({
                 text: $('#exampleInputTask1').val()
             }),
@@ -43,7 +43,7 @@ $('document').ready(function () {
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
-                url: 'http://localhost:8080/todo/update',
+                url: 'http://localhost:8080/todo/update.do',
                 data: JSON.stringify(
                     {idVal : idVal}
                 ),
@@ -60,7 +60,7 @@ $('document').ready(function () {
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
-                url: 'http://localhost:8080/todo/update',
+                url: 'http://localhost:8080/todo/update.do',
                 data: JSON.stringify({idVal : idVal}),
             }).done(function (data) {
                 console.log(data.text)

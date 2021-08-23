@@ -13,12 +13,24 @@ public class Task {
     private String description;
     private Timestamp created;
     private boolean done;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public static Task of(String description, Timestamp created, boolean done) {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public static Task of(String description, Timestamp created, boolean done, User user) {
         Task task = new Task();
         task.description = description;
         task.created = created;
         task.done = done;
+        task.user = user;
         return task;
     }
 
@@ -56,12 +68,6 @@ public class Task {
 
 
     @Override
-    public String toString() {
-        return "Task{" + "id=" + id + ", description='" + description + '\'' + ", created=" + created + ", done=" + done + '}';
-    }
-
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -73,11 +79,12 @@ public class Task {
         return done == task.done
                 && id.equals(task.id)
                 && description.equals(task.description)
-                && created.equals(task.created);
+                && created.equals(task.created)
+                && user.equals(task.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, created, done);
+        return Objects.hash(id, description, created, done, user);
     }
 }

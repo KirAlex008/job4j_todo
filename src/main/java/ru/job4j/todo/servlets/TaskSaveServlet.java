@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+
+import ru.job4j.todo.models.User;
 import ru.job4j.todo.stores.HbmStoreWrapper;
 import ru.job4j.todo.stores.Store;
 
@@ -21,7 +23,8 @@ public class TaskSaveServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/json");
         Store store = HbmStoreWrapper.getInstance();
-        store.createTask(Task.of(description, new Timestamp(System.currentTimeMillis()), false));
+        User user = (User) req.getSession(false).getAttribute("user");
+        store.createTask(Task.of(description, new Timestamp(System.currentTimeMillis()), false, user));
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
         writer.flush();
     }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LogForm</title>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+
+    </header>
+    <div class="content">
+        <div class="main">
+            <h1>Login Form</h1>
+            <h4>This is a simplest ToDoList program</h4>
+            <p>If you are not yet registered, please do this.</p>
+
+            <a href="http://localhost:8080/todo/jumptoreg.do">Link to registration here</a>
+            <br>
+            <form action="http://localhost:8080/todo/auth.do" method="post" name="order" id="order">
+                <fieldset>
+                    <legend>Information</legend>
+                    <div>
+                        <label for="email" class="label">Email</label>
+                        <input name="email" type="text" id="email" size="36">
+                    </div>
+                    <div>
+                        <label for="password" class="label">Password</label>
+                        <input name="password" type="text" id="password" size="36">
+                    </div>
+                    <div>
+                        <input type="submit" name="submit" id="submit" value="Submit">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

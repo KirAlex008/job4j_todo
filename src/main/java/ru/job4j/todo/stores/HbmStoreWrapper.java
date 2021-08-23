@@ -7,6 +7,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.job4j.todo.models.Task;
+import ru.job4j.todo.models.User;
+
 import java.util.Collection;
 import java.util.function.Function;
 
@@ -46,9 +48,11 @@ public class HbmStoreWrapper implements Store, AutoCloseable {
     }
 
     @Override
-    public Collection<Task> findAllTasks() {
+    public Collection<Task> findAllTasks(User user) {
         return this.tx(
-                session -> session.createQuery("from Task").list()
+                session -> session.createQuery("from Task where user.id=:user_id")
+                        .setParameter("user_id", user.getId())
+                        .list()
         );
     }
 
@@ -74,6 +78,36 @@ public class HbmStoreWrapper implements Store, AutoCloseable {
                     }
                     return success;
                 });
+    }
+
+    /*@Override
+    public User findByEmail(String email) {
+        return this.tx(
+                session -> session.get(User.class, email));
+    }*/
+
+    @Override
+    public User findByEmail(String value) {
+        return (User) this.tx(
+                session -> session.createQuery("From User u where u.email=:email")
+                        .setParameter("email", value)
+                        .uniqueResult()
+        );
+    }
+
+    public Task findById(Integer id) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        Task result = session.get(Task.class, id);
+        session.getTransaction().commit();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public User createUser(User user) {
+        this.tx(session -> session.save(user));
+        return user;
     }
 
 
