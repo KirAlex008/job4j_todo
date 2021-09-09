@@ -1,24 +1,45 @@
 $('document').ready(function () {
 
     $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/todo/save.do",
+        dataType: "json",
+        success: function (data) {
+            let categories = "";
+            for (let i = 0; i < data.length; i++) {
+                console.log("Go")
+                categories += "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";
+            }
+            $('#cIds').html(categories);
+        }
+    }) // end loading of categories schedule
+
+    $.ajax({
         method: 'GET',
         url: 'http://localhost:8080/todo/all_tasks.do',
         dataType: 'json',
+        timeout: 3000
     }).done(function (data) {
         for (const task of data) {
             let idVal = task.id;
             let doneVal = task.done;
             let lineCheckBox = getCheckBox(doneVal, idVal);
+            let categoriesArray= [];
+            for (const c of task.categories) {
+                categoriesArray.push(c.name)
+            }
             $('#insert').append(`<tr>
                         + <td> ${task.id} </td>
                         + ${lineCheckBox}
                         + <td> ${task.description} </td>
                         + <td> ${task.created} </td>
+                        + <td> ${categoriesArray} </td>
                         + </tr>`);
         }
     }).fail(function(err){
-        alert(err);
-    });
+        alert(err.text);
+    }); // end getAllTasks
+
 
     $('#button').click(function () {
         $.ajax({
@@ -29,9 +50,10 @@ $('document').ready(function () {
             }),
             dataType: 'json',
         }).fail(function(err){
-        alert(err);
-    });
-    });
+            alert(err);
+
+        });
+    }); // end addNewTask
 
     $('#insert').on('click', '.box', function() {
         let idVal;
@@ -68,7 +90,7 @@ $('document').ready(function () {
                 alert(err.responseText);
             });
         }
-    });
+    }); // end insertRowsIntoTable
 
     $(document).on('click','#allTasks', function() {
         if ($(this).prop('checked')) {
@@ -82,7 +104,7 @@ $('document').ready(function () {
                 $(this).parents("tr").show();
             }); // end func
         } // end else
-    }); // end all
+    }); // end hideAllCompleteTasks
 
     function getCheckBox(done, id) {
         let result;
@@ -93,6 +115,8 @@ $('document').ready(function () {
         }
         return result
     } // end getCheckBox
+
+
 
 }); // end ready
 

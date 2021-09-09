@@ -6,10 +6,12 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.job4j.todo.models.Category;
 import ru.job4j.todo.models.Task;
 import ru.job4j.todo.models.User;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Function;
 
 public class HbmStoreWrapper implements Store, AutoCloseable {
@@ -47,18 +49,50 @@ public class HbmStoreWrapper implements Store, AutoCloseable {
         }
     }
 
-    @Override
+/*    @Override
     public Collection<Task> findAllTasks(User user) {
         return this.tx(
                 session -> session.createQuery("from Task where user.id=:user_id")
                         .setParameter("user_id", user.getId())
                         .list()
         );
+    }*/
+    @Override
+    public Collection<Task> findAllTasks(User user) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        List result = session.createQuery(
+                "select distinct t from Task t  "
+                        + "join fetch t.categories", Task.class
+        ).list();
+        session.getTransaction().commit();
+        session.close();
+        return result;
     }
 
+    /*@Override
+    public Task createTask(Task task, String[] ids) {
+        return this.tx(session -> {
+            for (String id : ids) {
+                Category category = session.find(Category.class, Integer.parseInt(id));
+                task.addCategory(category);
+            }
+            session.save(task);
+            return task;
+        });
+    }*/
+
     @Override
-    public Task createTask(Task task) {
-        this.tx(session -> session.save(task));
+    public Task createTask(Task task, String[] ids) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        for (String id : ids) {
+            Category category = session.find(Category.class, Integer.parseInt(id));
+            task.addCategory(category);
+        }
+        session.save(task);
+        session.getTransaction().commit();
+        session.close();
         return task;
     }
 
@@ -110,10 +144,15 @@ public class HbmStoreWrapper implements Store, AutoCloseable {
         return user;
     }
 
+    @Override
+    public List<Category> findAllCategories() {
+        return this.tx(
+                session -> session.createQuery("from Category", Category.class)
+                .list()
+        );
+    }
 
     public void close() {
         StandardServiceRegistryBuilder.destroy(registry);
     }
-
-
 }

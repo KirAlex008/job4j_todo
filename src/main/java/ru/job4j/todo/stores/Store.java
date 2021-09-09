@@ -1,5 +1,6 @@
 package ru.job4j.todo.stores;
 
+import ru.job4j.todo.models.Category;
 import ru.job4j.todo.models.Task;
 import ru.job4j.todo.models.User;
 
@@ -9,7 +10,7 @@ public interface Store {
 
     Collection<Task> findAllTasks(User user);
 
-    Task createTask(Task task);
+    public Task createTask(Task task, String[] ids);
 
     boolean update(Integer id);
 
@@ -18,4 +19,7 @@ public interface Store {
     User findByEmail(String email);
 
     User createUser(User user);
+
+    public Collection<Category> findAllCategories();
+
 }

@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.job4j.todo.models.Category;
 import ru.job4j.todo.models.Task;
 import ru.job4j.todo.models.User;
 
@@ -29,15 +30,27 @@ public class HbmStore implements Store, AutoCloseable {
         return result;
     }
 
-    @Override
-    public Task createTask(Task task) {
+    /*@Override
+    public Task createTask(Task task, String[] ids) {
         Session session = sf.openSession();
         session.beginTransaction();
         session.save(task);
         session.getTransaction().commit();
         session.close();
         return task;
+    }*/
+
+    public Task createTask(Task task, String[] ids) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        for (String id : ids) {
+            Category category = session.find(Category.class, Integer.parseInt(id));
+            task.addCategory(category);
+        }
+        session.save(task);
+        return task;
     }
+
 
     @Override
     public boolean update(Integer id) {
@@ -67,6 +80,16 @@ public class HbmStore implements Store, AutoCloseable {
 
     @Override
     public User createUser(User user) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
+        return user;
+    }
+
+    @Override
+    public Collection<Category> findAllCategories() {
         return null;
     }
 

@@ -24,6 +24,9 @@ public class ShowAllTasksServlet extends HttpServlet {
         Store store = HbmStoreWrapper.getInstance();
         User user = (User) req.getSession(false).getAttribute("user");
         Collection<Task> tasks = store.findAllTasks(user);
+        for (var el: tasks) {
+            System.out.println(el.toString());
+        }
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(tasks);

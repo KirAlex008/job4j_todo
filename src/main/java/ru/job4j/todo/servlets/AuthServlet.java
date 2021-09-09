@@ -24,7 +24,7 @@ public class AuthServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/index.do");
         } else {
             req.setAttribute("error", "Не верный email или пароль");
-            req.getRequestDispatcher("reg.html").forward(req, resp);
+            req.getRequestDispatcher("regForm.html").forward(req, resp);
         }
     }
     }

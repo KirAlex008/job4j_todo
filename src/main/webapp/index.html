@@ -14,20 +14,35 @@
 
 <a href="http://localhost:8080/todo/logout.do">Exit</a>
 
-<form>
-    <div class="form-group">
-        <label>Add new task</label>
-        <input type="text" class="form-control" id="exampleInputTask1">
-    </div>
-    <button id="button" type="submit" class="btn btn-primary" >Submit</button>
-</form>
+<div class="wrapper">
+    <header>
 
-<form>
-    <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="allTasks">
-        <label class="form-check-label" for="allTasks" >Completed tasks</label>
+    </header>
+    <div class="content">
+        <div class="main">
+            <h1>Add new task</h1>
+            <form action="http://localhost:8080/todo/save.do" method="post" name="order" id="order">
+                <fieldset>
+                    <legend>Information</legend>
+                    <div>
+                        <label for="name" class="label">Name</label>
+                        <input name="name" type="text" id="name" size="36">
+                    </div>
+                    <label class="col-form-label col-sm-3" for="cIds" style="font-weight: 900">Categories schedule</label>
+                    <div class="form-group">
+                        <select class="form-control" name="cIds" id="cIds" multiple>
+                            <option></option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="submit" name="submit" id="submit" value="Submit">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
     </div>
-</form>
+
+</div>
 
 <div class="container">
     <table class="table">
@@ -44,6 +59,7 @@
         </tbody>
     </table>
 </div>
+
 
 </body>
 </html>
