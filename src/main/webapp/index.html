@@ -14,6 +14,8 @@
 
 <a href="http://localhost:8080/todo/logout.do">Exit</a>
 
+<p>User name: <output id="result" name="result"></output></p>
+
 <div class="wrapper">
     <header>
 
@@ -23,11 +25,17 @@
             <h1>Add new task</h1>
             <form action="http://localhost:8080/todo/save.do" method="post" name="order" id="order">
                 <fieldset>
-                    <legend>Information</legend>
+                    <legend>Enter an information for task description</legend>
                     <div>
-                        <label for="name" class="label">Name</label>
+                        <label for="name" class="label">Task name</label>
                         <input name="name" type="text" id="name" size="36">
                     </div>
+                    <form>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="allTasks">
+                            <label class="form-check-label" for="allTasks" >Completed tasks</label>
+                        </div>
+                    </form>
                     <label class="col-form-label col-sm-3" for="cIds" style="font-weight: 900">Categories schedule</label>
                     <div class="form-group">
                         <select class="form-control" name="cIds" id="cIds" multiple>

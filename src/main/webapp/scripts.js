@@ -1,24 +1,10 @@
 $('document').ready(function () {
 
     $.ajax({
-        type: "GET",
-        url: "http://localhost:8080/todo/save.do",
-        dataType: "json",
-        success: function (data) {
-            let categories = "";
-            for (let i = 0; i < data.length; i++) {
-                console.log("Go")
-                categories += "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";
-            }
-            $('#cIds').html(categories);
-        }
-    }) // end loading of categories schedule
-
-    $.ajax({
         method: 'GET',
         url: 'http://localhost:8080/todo/all_tasks.do',
         dataType: 'json',
-        timeout: 3000
+        timeout: 20000
     }).done(function (data) {
         for (const task of data) {
             let idVal = task.id;
@@ -40,6 +26,21 @@ $('document').ready(function () {
         alert(err.text);
     }); // end getAllTasks
 
+    $.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/todo/save.do',
+        dataType: 'json',
+        timeout: 50000
+    }).done(function (data) {
+        let categories = "";
+        for (let i = 0; i < data.length; i++) {
+            console.log("Go")
+            categories += "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";
+        }
+        $('#cIds').html(categories);
+    }).fail(function(err){
+        alert(err.responseText);
+    }) // end loading of categories schedule
 
     $('#button').click(function () {
         $.ajax({
@@ -50,7 +51,7 @@ $('document').ready(function () {
             }),
             dataType: 'json',
         }).fail(function(err){
-            alert(err);
+            alert(err.responseText);
 
         });
     }); // end addNewTask
@@ -116,7 +117,16 @@ $('document').ready(function () {
         return result
     } // end getCheckBox
 
-
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/todo/name.do',
+        dataType: 'text',
+        timeout: 10000
+    }).done(function(data) {
+        $('#result').append(data);
+    }).fail(function(err){
+        alert(err.responseText);
+    }); // end loading of user name
 
 }); // end ready
 

@@ -23,10 +23,6 @@ public class TaskSaveServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Category> categories = HbmStoreWrapper.getInstance().findAllCategories();
-
-        for (var el: categories) {
-            System.out.println(el.toString());
-        }
         ObjectMapper mapper = new ObjectMapper();
         String string = mapper.writeValueAsString(categories);
         resp.setCharacterEncoding("UTF-8");
@@ -42,7 +38,6 @@ public class TaskSaveServlet extends HttpServlet {
         Store store = HbmStoreWrapper.getInstance();
         User user = (User) req.getSession(false).getAttribute("user");
         store.createTask(Task.of(description, new Timestamp(System.currentTimeMillis()), false, user), category);
-        System.out.println("Sucsses");
         resp.sendRedirect(req.getContextPath() + "/index.do");
     }
 

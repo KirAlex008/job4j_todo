@@ -18,8 +18,8 @@ public class Tester {
                 .configure().build();
         try {
             SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-            //Session session = sf.openSession();
-            //session.beginTransaction();
+            Session session = sf.openSession();
+            session.beginTransaction();
             //Task task1 = create(Task.of("Learn Hibernate", new Timestamp(1459510232000L), false), sf);
             User user = findById(1, sf);
             //User user = createUser(User.of("User_1", "a", "s"), sf);
@@ -34,10 +34,10 @@ public class Tester {
             String[] categories = new String[2];
             categories[0] = "1";
             categories[1] = "2";
-            /*Task task1 = createTask(Task.of("Learn Hibernate", new Timestamp(1459510232000L), false, user), categories, sf);
+            Task task1 = createTask(Task.of("Learn Hibernate", new Timestamp(1459510232000L), false, user), categories, sf);
             Task task2 = createTask(Task.of("Learn SQL", new Timestamp(1459510232000L), false, user), categories, sf);
             System.out.println(task1.toString());
-            System.out.println(task2.toString());*/
+            System.out.println(task2.toString());
             //task1.addCategory(categories);
             //task2.addCategory(category);
 
