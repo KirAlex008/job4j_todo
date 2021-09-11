@@ -9,11 +9,11 @@ job4j_todo
 This project demonstrates the simple todo list.
 It uses next technologies: PostgreSQL, Maven, Servlets, BootStrap4, AJAX, JavaScript, JQuery.
 A registration form has view.
-![ScreenShot](images/NewToDo_11.jpg)
+![ScreenShot](images/reg.jpg)
 A login form has view.
-![ScreenShot](images/NewToDo_0.jpg)
+![ScreenShot](images/log.jpg)
 A List of the tasks that don't already is done. It contains a number, a task's state, description and a time when the task was created. 
-![ScreenShot](images/NewToDo_1.jpg)
+![ScreenShot](images/listall.jpg)
 This screenshot shows that the tasks which were done are hidden.
-![ScreenShot](images/NewToDo_2.jpg)
+![ScreenShot](images/listhidden.jpg)
 
