@@ -37,7 +37,7 @@ public class TaskSaveServlet extends HttpServlet {
         resp.setContentType("text/json");
         Store store = HbmStoreWrapper.getInstance();
         User user = (User) req.getSession(false).getAttribute("user");
-        store.createTask(Task.of(description, new Timestamp(System.currentTimeMillis()), false, user), category);
+        store.createTask(Task.of(description, false, user), category);
         resp.sendRedirect(req.getContextPath() + "/index.do");
     }
 

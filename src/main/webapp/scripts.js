@@ -3,8 +3,7 @@ $('document').ready(function () {
     $.ajax({
         method: 'GET',
         url: 'http://localhost:8080/todo/all_tasks.do',
-        dataType: 'json',
-        timeout: 20000
+        dataType: 'json'
     }).done(function (data) {
         for (const task of data) {
             let idVal = task.id;
@@ -29,8 +28,7 @@ $('document').ready(function () {
     $.ajax({
         method: 'GET',
         url: 'http://localhost:8080/todo/save.do',
-        dataType: 'json',
-        timeout: 50000
+        dataType: 'json'
     }).done(function (data) {
         let categories = "";
         for (let i = 0; i < data.length; i++) {
@@ -120,8 +118,7 @@ $('document').ready(function () {
     $.ajax({
         type: 'GET',
         url: 'http://localhost:8080/todo/name.do',
-        dataType: 'text',
-        timeout: 10000
+        dataType: 'text'
     }).done(function(data) {
         $('#result').append(data);
     }).fail(function(err){

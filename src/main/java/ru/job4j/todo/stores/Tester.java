@@ -34,8 +34,8 @@ public class Tester {
             String[] categories = new String[2];
             categories[0] = "1";
             categories[1] = "2";
-            Task task1 = createTask(Task.of("Learn Hibernate", new Timestamp(1459510232000L), false, user), categories, sf);
-            Task task2 = createTask(Task.of("Learn SQL", new Timestamp(1459510232000L), false, user), categories, sf);
+            Task task1 = createTask(Task.of("Learn Hibernate", false, user), categories, sf);
+            Task task2 = createTask(Task.of("Learn SQL", false, user), categories, sf);
             System.out.println(task1.toString());
             System.out.println(task2.toString());
             //task1.addCategory(categories);

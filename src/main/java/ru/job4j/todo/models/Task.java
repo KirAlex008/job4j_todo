@@ -3,6 +3,7 @@ package ru.job4j.todo.models;
 import java.sql.Timestamp;
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +14,8 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String description;
-    private Timestamp created;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
     private boolean done;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -33,10 +35,10 @@ public class Task {
         this.user = user;
     }
 
-    public static Task of(String description, Timestamp created, boolean done, User user) {
+    public static Task of(String description, boolean done, User user) {
         Task task = new Task();
         task.description = description;
-        task.created = created;
+        task.created = new Date(System.currentTimeMillis());
         task.done = done;
         task.user = user;
         return task;
@@ -56,14 +58,6 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Timestamp getCreated() {
-        return created;
-    }
-
-    public void setCreated(Timestamp created) {
-        this.created = created;
     }
 
     public boolean isDone() {
@@ -104,5 +98,13 @@ public class Task {
                 + ", created='" + created + '\''
                 + ", category=" + categories
                 + '}';
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 }
